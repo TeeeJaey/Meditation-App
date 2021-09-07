@@ -1,0 +1,55 @@
+
+.bg-dark {
+    background-color:#303841;
+}
+
+.display-none
+{
+    display: none;
+}
+
+.red-button
+{
+    background-color: #f16b52;
+    padding: 5px 10px;
+    color: white;
+    width: 120px;
+    text-decoration: none;
+}
+.red-button:hover {
+    text-decoration: none;
+    color:#303841;
+}
+
+.dashboard-header {
+    height:38px;
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+}
+.dashboard-header-data {
+    width: 100%;
+    display: inline-flex;
+    justify-content:flex-start;
+    flex-wrap: wrap;
+}
+
+.auth-form { 
+    max-width: 400px; 
+    margin:auto;
+}
+
+.selected {
+    background-color: #f16b52;
+    color: white;
+}
+.selected:hover{
+    background-color: #f16b52;
+    color: white;
+}
+
+.trainer-list{
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+}
