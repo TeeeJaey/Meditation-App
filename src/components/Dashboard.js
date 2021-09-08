@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { useAuth } from "../services/AuthContext";
 import { useHistory } from "react-router-dom";
-import DashboardContent from "./DashboardContent";
+import SeekerDashboardContent from "./SeekerDashboardContent";
+import TrainerDashboardContent from "./TrainerDashboardContent";
+import Meditation from "./Meditation";
+import Constants from "../Constants";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
+  const [ meditating, setMeditating ] = useState(false);
+  const [ meditatingWith, setMeditatingWith ] = useState("");
   const history = useHistory();
 
   async function handleLogout() {
@@ -19,6 +24,11 @@ export default function Dashboard() {
       setError("Failed to log out");
     }
   }
+
+  const toggleMeditating = (toggle,medWith="someone") => {
+    setMeditating(toggle);
+    setMeditatingWith(medWith);
+  };
 
   return (
       <div className="card" style={{height:"90vh"}}>
@@ -34,13 +44,22 @@ export default function Dashboard() {
                 <strong>Type:</strong> {currentUser.type}
               </span>
             </div>
-            <Button variant="link" onClick={handleLogout} className="red-button">
+            <Button variant="link" onClick={handleLogout} className="red-button" disabled={meditating}>
               Log Out
             </Button>
           </div>
         </div>
 
-        <DashboardContent/>
+        {meditating && <Meditation sec={60} showStop={true} toggleMeditating={(toggle)=>toggleMeditating(toggle)} meditatingWith={meditatingWith} />}
+        
+        {!meditating && currentUser.type === Constants.userTypes.seeker && 
+            <SeekerDashboardContent toggleMeditating={(toggle,medWith) =>toggleMeditating(toggle,medWith)} /> 
+        }
+        
+        {!meditating && currentUser.type === Constants.userTypes.trainer && 
+            <TrainerDashboardContent toggleMeditating={(toggle,medWith) =>toggleMeditating(toggle,medWith)} /> 
+        }
+      
       </div>
   );
 }

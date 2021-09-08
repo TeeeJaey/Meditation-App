@@ -1,5 +1,6 @@
+import Constants from "../Constants";
 import firebase from "../firebase";
-const trainers = firebase.ref("/trainers");
+const trainers = firebase.collection("/" + Constants.dbTable.trainers);
 
 class TrainerService
 {
@@ -9,7 +10,7 @@ class TrainerService
 
     static create(email, available=true) {
         try{
-            return trainers.push({email:email, available:available});
+            return trainers.add({email:email, available:available});
         }
         catch(e){
             console.error(e);

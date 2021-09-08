@@ -34,7 +34,7 @@ export default function Signup() {
 
   let SeekerTabClass="btn w-50 ";
   let TrainerTabClass="btn w-50 ";
-  if(type == "seeker") SeekerTabClass+="selected";
+  if(type === "seeker") SeekerTabClass+="selected";
   else TrainerTabClass+="selected";
 
   return (

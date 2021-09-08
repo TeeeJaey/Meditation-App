@@ -1,6 +1,6 @@
-  
+import Constants from "../Constants";
 import firebase from "../firebase";
-const users = firebase.ref("/users");
+const users = firebase.collection("/" + Constants.dbTable.users);
 
 class UserService
 {
@@ -10,7 +10,7 @@ class UserService
 
     static create(email, type="seeker") {
         try{
-            return users.push({email:email, type:type});
+            return users.add({email:email, type:type});
         }
         catch(e){
             console.error(e);

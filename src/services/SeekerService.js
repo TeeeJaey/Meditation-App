@@ -1,6 +1,6 @@
-  
+import Constants from "../Constants";
 import firebase from "../firebase";
-const seekers = firebase.ref("/seekers");
+const seekers = firebase.collection("/" + Constants.dbTable.seekers);
 
 class SeekerService
 {
@@ -10,7 +10,7 @@ class SeekerService
 
     static create(email, available=true) {
         try{
-            return seekers.push({email:email, available:available});
+            return seekers.add({email:email, available:available});
         }
         catch(e){
             console.error(e);
