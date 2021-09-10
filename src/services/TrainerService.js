@@ -8,7 +8,7 @@ class TrainerService
         return trainers;
     }
 
-    static create(email, available=true) {
+    static create(email, available=false) {
         try{
             return trainers.add({email:email, available:available});
         }
@@ -25,16 +25,18 @@ class TrainerService
         return trainers.doc(id).delete();
     }
     
-    static setAvailable(email, available=true) {
-        TrainerService.getAll().onSnapshot(dbTrainerList => {
+    static setAvailable(email, available=false) {
+        return trainers.get().then(dbTrainerList => {
             let trainerID = "";
             dbTrainerList.forEach(dbTrainerRef => {
                 const dbTrainer = dbTrainerRef.data();
                 if(dbTrainer && dbTrainer.email === email) 
+                {
                     trainerID = dbTrainerRef.id;
+                    if(trainerID)
+                        TrainerService.update(trainerID, {available:available});
+                }
             });
-            if(trainerID)
-                TrainerService.update(trainerID, {available:available});
         });
     }
 }

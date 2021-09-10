@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react"
 import RequestService from "./RequestService";
 import Constants from "../Constants";
 import { useAuth } from "../services/AuthContext";
+import TrainerService from "./TrainerService";
 
 const RequestContext = React.createContext()
 
@@ -14,11 +15,13 @@ export function RequestProvider({ children }) {
     const [currentRequest, setCurrentRequest] = useState();
 
     const activateRequest = (req) => {
+        TrainerService.setAvailable(currentUser.email,false);
         setCurrentRequest(req);
         return RequestService.update(req.id, {status : Constants.requestStatus.active});
     };
 
     const deleteRequest = ()=>{
+        TrainerService.setAvailable(currentUser.email);
         return RequestService.delete(currentRequest.id);
     };
 

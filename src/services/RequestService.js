@@ -21,7 +21,7 @@ class RequestService
     }
 
     static clearRequests(email) {
-        RequestService.getAll().onSnapshot(requestList => {
+        return requests.get().then(requestList => {
             requestList.forEach(requestRef => {
                 const id = requestRef.id;
                 const request = requestRef.data();

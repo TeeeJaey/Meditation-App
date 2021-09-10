@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react"
 import { auth } from "../firebase"
 import TrainerService from "./TrainerService";
 import Constants from "../Constants";
+import RequestService from "./RequestService";
 
 const AuthContext = React.createContext()
 
@@ -20,11 +21,12 @@ export function AuthProvider({ children }) {
   }
 
   function login(email, password) {
-    TrainerService.setAvailable(email);
+    TrainerService.setAvailable(email, true);
     return auth.signInWithEmailAndPassword(email, password)
   }
 
   function logout() {
+    //RequestService.clearRequests(currentUser.email);
     TrainerService.setAvailable(currentUser.email,false);
     return auth.signOut()
   }

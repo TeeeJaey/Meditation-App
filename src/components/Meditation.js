@@ -10,7 +10,7 @@ function MyTimer(props) {
     const expiryTimestamp = props.expiryTimestamp
     const { seconds, minutes } = useTimer({
         expiryTimestamp,
-        onExpire: () => console.warn('onExpire called')
+        onExpire: () => console.log('MyTimer onExpire')
     });
 
     if(currentRequest) {

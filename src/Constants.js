@@ -23,8 +23,7 @@ export default class Constants
     {
         return {
             pending: "pending",
-            active: "active",
-            cancelled: "cancelled"
+            active: "active"
         };
     }
 

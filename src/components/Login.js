@@ -15,15 +15,15 @@ export default function Login() {
     e.preventDefault()
 
     try {
-      setError("")
-      setLoading(true)
-      await login(emailRef.current.value, passwordRef.current.value)
-      history.push("/")
+        setError('')
+        setLoading(true) 
+        await login(emailRef.current.value, passwordRef.current.value)
+        setLoading(false)  
+        history.push('/')
     } catch {
-      setError("Failed to log in")
+        setLoading(false)  
+        setError('Failed to login')
     }
-
-    setLoading(false)
   }
 
   return (
