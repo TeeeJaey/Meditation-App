@@ -1,6 +1,4 @@
 import React, { useContext, useState, useEffect } from "react"
-import { auth } from "../firebase"
-import TrainerService from "./TrainerService";
 import RequestService from "./RequestService";
 import Constants from "../Constants";
 import { useAuth } from "../services/AuthContext";
@@ -25,7 +23,7 @@ export function RequestProvider({ children }) {
     };
 
     useEffect(() => {
-        RequestService.getAll().onSnapshot(requestList => {
+        return RequestService.getAll().onSnapshot(requestList => {
             let curreq = {};
             requestList.forEach(requestRef => {
                 const request = requestRef.data();
@@ -45,7 +43,7 @@ export function RequestProvider({ children }) {
             });
             setCurrentRequest(curreq);
         });
-    }, []);
+    });
 
     const value = {
         currentRequest,

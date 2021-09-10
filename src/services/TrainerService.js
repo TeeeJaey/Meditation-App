@@ -24,5 +24,18 @@ class TrainerService
     static delete(id) {
         return trainers.doc(id).delete();
     }
+    
+    static setAvailable(email, available=true) {
+        TrainerService.getAll().onSnapshot(dbTrainerList => {
+            let trainerID = "";
+            dbTrainerList.forEach(dbTrainerRef => {
+                const dbTrainer = dbTrainerRef.data();
+                if(dbTrainer && dbTrainer.email === email) 
+                    trainerID = dbTrainerRef.id;
+            });
+            if(trainerID)
+                TrainerService.update(trainerID, {available:available});
+        });
+    }
 }
 export default TrainerService;

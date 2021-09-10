@@ -8,7 +8,7 @@ function MyTimer(props) {
     const { currentRequest, deleteRequest } = useRequest();
     const { currentUser } = useAuth();
     const expiryTimestamp = props.expiryTimestamp
-    const { seconds, minutes, pause } = useTimer({
+    const { seconds, minutes } = useTimer({
         expiryTimestamp,
         onExpire: () => console.warn('onExpire called')
     });

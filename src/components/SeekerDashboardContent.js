@@ -13,7 +13,7 @@ export default function SeekerDashboardContent(props) {
   const [ pendingRequests, setPendingRequests ] = useState([]);
   
     useEffect(() => {
-        TrainerService.getAll().onSnapshot(trainerList => {
+        return TrainerService.getAll().onSnapshot(trainerList => {
             const trainers = [];
             trainerList.forEach(trainerRef => {
                 const trainer = trainerRef.data();
@@ -23,11 +23,11 @@ export default function SeekerDashboardContent(props) {
             });
             setAvailableTrainers(trainers);
         });
-    }, []);
+    });
 
 
     useEffect(() => {
-        RequestService.getAll().onSnapshot(requestList => {
+        return RequestService.getAll().onSnapshot(requestList => {
             const requests = [];
             requestList.forEach(requestRef => {
                 const request = requestRef.data();
@@ -41,7 +41,7 @@ export default function SeekerDashboardContent(props) {
             });
             setPendingRequests(requests);
         });
-    }, []);
+    });
 
     const isPending = (trainer) => {
         return pendingRequests.find(req => req.reciever === trainer.email);

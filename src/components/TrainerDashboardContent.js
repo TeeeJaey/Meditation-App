@@ -11,7 +11,7 @@ export default function TrainerDashboardContent(props) {
     const [ pendingRequests, setPendingRequests ] = useState([]);
 
     useEffect(() => {
-        RequestService.getAll().onSnapshot(requestList => {
+        return RequestService.getAll().onSnapshot(requestList => {
             const requests = [];
             requestList.forEach(requestRef => {
                 const request = requestRef.data();
@@ -21,7 +21,7 @@ export default function TrainerDashboardContent(props) {
             });
             setPendingRequests(requests);
         });
-    }, []);
+    });
 
     if(pendingRequests && pendingRequests.length > 0)
         return (

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react"
 import { auth } from "../firebase"
 import TrainerService from "./TrainerService";
-import RequestService from "./RequestService";
 import Constants from "../Constants";
 
 const AuthContext = React.createContext()
@@ -21,46 +20,39 @@ export function AuthProvider({ children }) {
   }
 
   function login(email, password) {
+    TrainerService.setAvailable(email);
     return auth.signInWithEmailAndPassword(email, password)
   }
 
   function logout() {
+    TrainerService.setAvailable(currentUser.email,false);
     return auth.signOut()
   }
 
   useEffect(() => {
     
-    const unsubscriber = auth.onAuthStateChanged(user => {
+    return auth.onAuthStateChanged(user => {
+      setCurrentUser(user);
+      setLoading(false);
       if(user) {
-        TrainerService.getAll().onSnapshot(dbTrainerList =>{
+        TrainerService.getAll().onSnapshot(dbTrainerList => {
 
           dbTrainerList.forEach(dbTrainerRef => {
             const dbTrainer = dbTrainerRef.data();
-            if(dbTrainer && dbTrainer.email === user.email) 
-            {
+            if(dbTrainer && dbTrainer.email === user.email) {
               user.type = Constants.userTypes.trainer;
               user.trainerid = dbTrainerRef.id;
             }
           });
 
-          if(user.type === Constants.userTypes.trainer && user.trainerid !== "") {
-            TrainerService.update(user.trainerid, {available:true})
-          }
-          else {
+          if(user.type !== Constants.userTypes.trainer) {
             user.type = Constants.userTypes.seeker;
           }
 
           setCurrentUser(user);
-          setLoading(false);
         });
       }
-      else {
-        setCurrentUser(user);
-        setLoading(false);
-      }
     });
-
-    return unsubscriber;
   }, [])
 
   const value = {

@@ -12,8 +12,6 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const { currentRequest } = useRequest();
-  const [ meditating, setMeditating ] = useState(false);
-  const [ meditatingWith, setMeditatingWith ] = useState("");
   const history = useHistory();
   
   let showStop = false;
@@ -52,7 +50,7 @@ export default function Dashboard() {
                 <strong>Type:</strong> {currentUser.type}
               </span>
             </div>
-            <Button variant="link" onClick={handleLogout} className="red-button" disabled={meditating}>
+            <Button variant="link" onClick={handleLogout} className="red-button" disabled={dashboardDisplay===0}>
               Log Out
             </Button>
           </div>
