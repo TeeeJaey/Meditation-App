@@ -3,31 +3,29 @@ export default class Constants
 {
     static get dbTable()
     {
-        const dbTable = {
+        return {
             users: "users",
             trainers: "trainers",
             seekers: "seekers",
             requests: "requests"
         };
-        return dbTable;
     }
 
     static get userTypes()
     {
-        const userTypes = {
+        return {
             trainer: "trainer",
             seeker: "seeker",
         };
-        return userTypes;
     }
 
     static get requestStatus()
     {
-        const userTypes = {
+        return {
             pending: "pending",
-            accepted: "accepted"
+            active: "active",
+            cancelled: "cancelled"
         };
-        return userTypes;
     }
 
 }

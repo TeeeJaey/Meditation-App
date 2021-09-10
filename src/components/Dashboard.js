@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import { useAuth } from "../services/AuthContext";
+import { useRequest } from "../services/RequestContext";
 import { useHistory } from "react-router-dom";
 import SeekerDashboardContent from "./SeekerDashboardContent";
 import TrainerDashboardContent from "./TrainerDashboardContent";
@@ -10,10 +11,15 @@ import Constants from "../Constants";
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
+  const { currentRequest } = useRequest();
   const [ meditating, setMeditating ] = useState(false);
   const [ meditatingWith, setMeditatingWith ] = useState("");
   const history = useHistory();
-
+  
+  let showStop = false;
+  if(currentUser.type === Constants.userTypes.trainer)
+    showStop = true;
+  
   async function handleLogout() {
     setError("");
 
@@ -25,10 +31,14 @@ export default function Dashboard() {
     }
   }
 
-  const toggleMeditating = (toggle,medWith="someone") => {
-    setMeditating(toggle);
-    setMeditatingWith(medWith);
-  };
+  let dashboardDisplay = 0;
+  if(currentRequest && currentRequest.status !== Constants.requestStatus.active) {
+    if(currentUser.type === Constants.userTypes.seeker)
+        dashboardDisplay = 1;
+    else 
+      dashboardDisplay = 2;
+     
+  }
 
   return (
       <div className="card" style={{height:"90vh"}}>
@@ -36,11 +46,9 @@ export default function Dashboard() {
           <div className="dashboard-header" >
             <div className="dashboard-header-data" >
               <span style={{margin: "auto 0px", marginRight:"15px"}}>
-                {error && <Alert variant="danger">{error}</Alert>}
                 <strong>User:</strong> {currentUser.email}
               </span>
               <span style={{margin: "auto 0px", textTransform: "capitalize"}}>
-                {error && <Alert variant="danger">{error}</Alert>}
                 <strong>Type:</strong> {currentUser.type}
               </span>
             </div>
@@ -48,16 +56,17 @@ export default function Dashboard() {
               Log Out
             </Button>
           </div>
+                {error && <Alert variant="danger">{error}</Alert>}
         </div>
 
-        {meditating && <Meditation sec={60} showStop={true} toggleMeditating={(toggle)=>toggleMeditating(toggle)} meditatingWith={meditatingWith} />}
-        
-        {!meditating && currentUser.type === Constants.userTypes.seeker && 
-            <SeekerDashboardContent toggleMeditating={(toggle,medWith) =>toggleMeditating(toggle,medWith)} /> 
+        { dashboardDisplay === 0 && 
+            <Meditation sec={60} showStop={showStop}  />
         }
-        
-        {!meditating && currentUser.type === Constants.userTypes.trainer && 
-            <TrainerDashboardContent toggleMeditating={(toggle,medWith) =>toggleMeditating(toggle,medWith)} /> 
+        { dashboardDisplay === 1 && 
+            <SeekerDashboardContent /> 
+        }
+        { dashboardDisplay === 2 && 
+            <TrainerDashboardContent /> 
         }
       
       </div>

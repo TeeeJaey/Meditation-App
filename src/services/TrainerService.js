@@ -16,5 +16,13 @@ class TrainerService
             console.error(e);
         }
     }
+    
+    static update(id, value) {
+        return trainers.doc(id).update(value);
+    }
+
+    static delete(id) {
+        return trainers.doc(id).delete();
+    }
 }
 export default TrainerService;

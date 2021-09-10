@@ -23,10 +23,12 @@ class RequestService
     static clearRequests(email) {
         RequestService.getAll().onSnapshot(requestList => {
             requestList.forEach(requestRef => {
-              const id = requestRef.id;
-              const request = requestRef.data();
-              if(request.sender === email)
-                RequestService.delete(id);
+                const id = requestRef.id;
+                const request = requestRef.data();
+                if(request.sender === email)
+                    RequestService.delete(id);
+                if(request.reciever === email)
+                    RequestService.delete(id);
             });
           });
     }
