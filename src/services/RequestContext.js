@@ -21,7 +21,7 @@ export function RequestProvider({ children }) {
     };
 
     const deleteRequest = ()=>{
-        TrainerService.setAvailable(currentUser.email);
+        TrainerService.setAvailable(currentUser.email,true);
         return RequestService.delete(currentRequest.id);
     };
 

@@ -58,7 +58,7 @@ export default function Dashboard() {
         </div>
 
         { dashboardDisplay === 0 && 
-            <Meditation sec={60} showStop={showStop}  />
+            <Meditation sec={30} showStop={showStop}  />
         }
         { dashboardDisplay === 1 && 
             <SeekerDashboardContent /> 

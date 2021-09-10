@@ -69,3 +69,18 @@
     display: inline-flex;
     justify-content: space-between;
 }
+
+.meditation-container {
+    display: flex;
+    text-align: center;
+    margin-top: 20px;
+    flex-flow: column;
+    align-items: center;
+}
+
+.meditation-image {
+    margin-top: 20px;
+    height: 250px;
+    width: fit-content;
+    margin: auto;
+}

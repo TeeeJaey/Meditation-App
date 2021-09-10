@@ -29,12 +29,14 @@ function MyTimer(props) {
           meditationWith = currentRequest.reciever;
 
       return (
-            <div style={{ textAlign: 'center', marginTop:"100px" }}>
+            <div className="meditation-container">
                 <h2> Meditating for one minute with <span style={{color:"red"}}>{meditationWith}</span> </h2> 
                 <div style={{ fontSize: '100px' }}>
                     <span>{sec}</span>
                 </div>
                 <button onClick={()=>deleteRequest()} className={stopClass} > Stop session </button>
+
+                <img src={require('../images/meditation.png')} className="meditation-image" />
             </div>
       );
   }
